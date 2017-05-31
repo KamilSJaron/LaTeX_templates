@@ -1,0 +1,105 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Autor: Kamil Jaron modified v1.7 of Petr Zemanek (zemanekp@math.muni.cz)   %%%
+% Typeset in LaTeX-2e                                                        %%%
+% Version: 1.8 (30. May 2017)                                                %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \documentclass[11pt,a4paper,oneside,final]{book}
+% \documentclass[11pt,a4paper,twoside,final]{book}
+\documentclass[12pt,a4paper,oneside,final]{book}
+% \documentclass[12pt,a4paper,twoside,final]{book}
+
+% to add new commands or change current look at the setting.tex
+\input{setting.tex}
+
+%%%%%%%%%%%%%
+%% SETTING %%
+%%%%%%%%%%%%%
+
+% uncomment following line to highlight overfull boxes
+% \overfullrule0pt
+
+% you can set a path for including graphics
+% \graphicspath{{/path/to/figures}}
+
+% {University} {Faculty} {Department}
+\setAffiliation{University of Lausanne}{Faculty of Biology and Medicine}{Department of Ecology and Evolution}
+
+\setYear{2017}
+\setPlace{Lausanne}
+
+\setAutor{Kamil Jaron}
+\setTitle{Effects of asexual reproduction on genome evolution.}
+\setSupervisor{Marc Robinson-Rechavi, Tanja Schwander}
+\setKeywords{genome evolution; }
+
+\makeindex
+
+%%%%%%%%%%%%
+% DOCUMENT %
+%%%%%%%%%%%%
+
+\begin{document}
+
+\Frontpage{mid-PhD report}
+
+\pdfbookmark{Contents}{Contents}
+\VytvorObsah
+\cleardoublepage
+
+\setcounter{page}{1}
+\pagestyle{plain}
+\pagenumbering{arabic}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection. #1}{}}
+
+\HlavickaKapitoly
+
+\chapter{Introduction} \label{intro}
+
+This is important work~\cite{jaron2013}.
+
+\chapter{Materials and Methods} \label{methods}
+
+With reliable data~\cite{uniprot_yeast2013}.
+
+\chapter{Results} \label{results}
+
+We have awesome results.
+
+\chapter{Discussion} \label{discussion}
+
+ANd it makes sense in context of current literature~\cite{uchiyama2006}.
+
+\chapter{Conclusion} \label{conclusion}
+
+You should worship out work!
+
+% \newpage
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{References}
+
+\renewcommand{\bibname}{References}
+% \pdfbookmark{\bibname}{\bibname}
+\bibliographystyle{unsrt}
+\HlavickaLiteratura
+\bibliography{library}
+\clearpage
+
+% \phantomsection
+% \addcontentsline{toc}{chapter}{List of figures and tables}
+% \chapter*{List of figures and tables}
+% \centering
+% \listoffigures
+%
+% % \vfill
+%
+% \listoftables
+
+% \clearpage
+
+
+\end{document}

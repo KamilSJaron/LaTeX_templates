@@ -5,3 +5,8 @@
 *.pdf
 *.snm
 *.toc
+*.bbl
+*.blg
+*.lof
+*.lot
+*.idx
