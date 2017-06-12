@@ -1,6 +1,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Autor: Kamil Jaron modified v1.7 of Petr Zemanek (zemanekp@math.muni.cz)   %%%
+% Autor: Kamil Jaron based on v1.7 of Petr Zemanek (zemanekp@math.muni.cz)   %%%
 % Version: 1.0 (30. May 2017)                                                %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,7 +39,7 @@ urlcolor=black,
 \overfullrule10pt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEFINICE POVINNYCH CASTI %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUIRED INFO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\setAffiliation}[3]{\newcommand{\University}{#1}
                                 \newcommand{\Faculty}{#2}
@@ -54,24 +54,13 @@ urlcolor=black,
 \newcommand{\setKeywords}[1]{\newcommand{\Keywords}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ROZMERY STRANKY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PAGE SIZES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
-\newcommand{\VelikostHlavicky}{12 pt+\@ptsize pt}
+\newcommand{\HeaderSIze}{12 pt+\@ptsize pt}
 \makeatother
 \usepackage[top=22mm,bottom=24mm,left=34mm,right=25mm,headsep=6mm,footskip=8mm,includeheadfoot,
-headheight=\VelikostHlavicky]{geometry}
-
-%%%%%%%%%%%%%%%%%
-%%%%% DATUM %%%%%
-%%%%%%%%%%%%%%%%%
-
-\def\Dnes{\number\day.~\ifcase
-\month\or ledna\or února\or
-b{\v{r}}ezna\or dubna\or kv{\v{e}}tna\or
-{\v{c}}ervna\or {\v{c}}ervence\or srpna\or
-z{\'{a}}{\v{r}}{\'{i}}\or {\v{r}}{\'{i}}jna\or listopadu\or
-prosince\fi \space\number\year}
+headheight=\HeaderSIze]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% PREDEFINOVANI CLEARDOUBLEPAGE - NA PRAZDNYCH STRANACH PRI OBOUSTRANNEM TISKU NEBUDE HLAVICKA %%%%%%%
@@ -85,7 +74,7 @@ prosince\fi \space\number\year}
 \makeatother \clearpage{\pagestyle{empty}\cleardoublepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HALVICKY POVINNYCH CASTI %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 \newcommand{\NazevPovinneCasti}[1]{%
@@ -99,7 +88,7 @@ prosince\fi \space\number\year}
 \makeatother
 
 %%%%%%%%%%%%%%%%%
-%%%%% DESKY %%%%%
+%%%%% Frontpage %%%%%
 %%%%%%%%%%%%%%%%%
 
 \newcommand{\Frontpage}[1]{
@@ -108,19 +97,19 @@ prosince\fi \space\number\year}
 \pdfbookmark{Cover}{Cover}
 \pagenumbering{Alph}
 
-\newlength{\sirkaustavorig} %% urci puvodni sirku textu s nazvem ustavu
-\settowidth{\sirkaustavorig}{\fontsize{16pt}{28pt}\selectfont{\textbf{\textsc{\Department}}}}
+\newlength{\departmentwidth} %% urci puvodni sirku textu s nazvem ustavu
+\settowidth{\departmentwidth}{\fontsize{16pt}{28pt}\selectfont{\textbf{\textsc{\Department}}}}
 
-\newlength{\sirkafakultaorig} %% urci sirku textu s nazvem fakulty
-\settowidth{\sirkafakultaorig}{\fontsize{21pt}{28pt}\selectfont{\textbf{\textsc{P{\v{r}}{\'{i}}rodov{\v{e}}deck{\'{a}}
+\newlength{\facultywidth} %% urci sirku textu s nazvem fakulty
+\settowidth{\facultywidth}{\fontsize{21pt}{28pt}\selectfont{\textbf{\textsc{P{\v{r}}{\'{i}}rodov{\v{e}}deck{\'{a}}
 fakulta}}}}
 
 
   \begin{center}
     {\fontsize{22pt}{28pt}\selectfont{\textbf{\textsc{\University}}}}\\[2mm]
     {\fontsize{21pt}{28pt}\selectfont{\textbf{\textsc{\Faculty}}}}\\
-    \ifthenelse{\lengthtest{\sirkaustavorig > 0.95\sirkafakultaorig}}%
-        {\textbf{\textsc{\scaletowidth{0.95\sirkafakultaorig}{\Department}}}}%
+    \ifthenelse{\lengthtest{\departmentwidth > 0.95\facultywidth}}%
+        {\textbf{\textsc{\scaletowidth{0.95\facultywidth}{\Department}}}}%
         {\vspace*{-3mm}\fontsize{16pt}{28pt}\selectfont{\textbf{\textsc{\Department}}}}
   \end{center}
 
@@ -138,11 +127,11 @@ fakulta}}}}
 \ht2=\the\ht1
 \setbox0=\hbox{\resizebox{0.68\textwidth}{!}{\box2}}
 
-\newlength{\sirkadeskyorig} %% urci puvodni sirku textu se jmenem autora
-\settowidth{\sirkadeskyorig}{\fontsize{22pt}{28pt}\selectfont{\textbf{\textsc{\Author}}}}
+\newlength{\frontpagewidth} %% urci puvodni sirku textu se jmenem autora
+\settowidth{\frontpagewidth}{\fontsize{22pt}{28pt}\selectfont{\textbf{\textsc{\Author}}}}
 
 \begin{raggedright}
- \ifthenelse{\lengthtest{\sirkadeskyorig > 0.65\textwidth}}%
+ \ifthenelse{\lengthtest{\frontpagewidth > 0.65\textwidth}}%
        {\noindent \resizebox{!}{\the\ht0}{{\textbf{\textsc{\Place~\Year}}}} \hfill \copy0}
        {{\fontsize{22pt}{28pt}\selectfont{\textbf{\textsc{\Place~\Year \hfill \Author}}}}}
 \end{raggedright}
@@ -152,8 +141,30 @@ fakulta}}}}
 \cleardoublepage
 }
 
+%% REFERENCES HEADER
+\newcommand{\ReferenceHeader}{
+\pagestyle{plain}%
+\fancyhf{}%
+  \if@twoside
+    \fancyhead[CO]{\small\it \bibname\ \hrulefill\ \thepage}% TWOSIDE
+    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ \small \bibname}% TWOSIDE
+  \else
+    \fancyhead[C]{\small\it \bibname\ \hrulefill\ \thepage}% ONESIDE
+  \fi
+}
+
+\newcommand{\ChapterHeader}{%
+\pagestyle{fancy}%
+\fancyhf{}%
+  \if@twoside
+    \fancyhead[CO]{\small\it \chaptername\ \leftmark\ \hrulefill\ \thepage}% TWOSIDE
+    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ \chaptername\ \leftmark}% TWOSIDE
+  \else
+    \fancyhead[C]{\small\it \chaptername\ \leftmark\ \hrulefill\ \thepage}% ONESIDE
+  \fi
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NASTAVENI ZAKLADNIHO ZAHLAVI A ZAPATI V SABLONE %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SPACING AROUND PAGES %%%%%%%%%%%%%%%%%%%%%%%
 
 \def\headrulewidth{0pt}%
 \def\footrulewidth{0pt}%
@@ -168,135 +179,25 @@ fakulta}}}}
   \fi
 }
 
-\newcommand{\HlavickaUvod}{
-\pagestyle{fancy}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it {\'{U}}vod\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ {\'{U}}vod}% TWOSIDE
-  \else
-    \fancyhead[C]{\small\it {\'{U}}vod\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-\newcommand{\HlavickaZnaceni}{
-\pagestyle{fancy}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it P{\v{r}}ehled pou{\v{z}}it{\'{e}}ho zna{\v{c}}en{\'{i}}\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ P{\v{r}}ehled pou{\v{z}}it{\'{e}}ho zna{\v{c}}en{\'{i}}}% TWOSIDE
-  \else
-    \fancyhead[C]{\small\it P{\v{r}}ehled pou{\v{z}}it{\'{e}}ho zna{\v{c}}en{\'{i}}\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-\newcommand{\HlavickaKapitoly}{%
-\pagestyle{fancy}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it \chaptername\ \leftmark\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ \chaptername\ \leftmark}% TWOSIDE
-  \else
-    \fancyhead[C]{\small\it \chaptername\ \leftmark\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-\newcommand{\HlavickaZaver}{
-\pagestyle{fancy}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it Z{\'{a}}v{\v{e}}r\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ Z{\'{a}}v{\v{e}}r}% TWOSIDE
-   \else
-    \fancyhead[C]{\small\it Z{\'{a}}v{\v{e}}r\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-\newcommand{\HlavickaPriloha}{
-\pagestyle{fancy}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it P{\v{r}}{\'{i}}loha\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ P{\v{r}}{\'{i}}loha}% TWOSIDE
-   \else
-    \fancyhead[C]{\small\it P{\v{r}}{\'{i}}loha\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-
-\newcommand{\HlavickaLiteratura}{
-\pagestyle{plain}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it \bibname\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ \small \bibname}% TWOSIDE
-  \else
-    \fancyhead[C]{\small\it \bibname\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-\newcommand{\HlavickaRejstrik}{
-\pagestyle{plain}%
-\fancyhf{}%
-  \if@twoside
-    \fancyhead[CO]{\small\it \indexname\ \hrulefill\ \thepage}% TWOSIDE
-    \fancyhead[CE]{\small\it\thepage\ \hrulefill\ \indexname}% TWOSIDE
-  \else
-    \fancyhead[C]{\small\it \indexname\ \hrulefill\ \thepage}% ONESIDE
-  \fi
-}
-
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%% VLOZ=INPUT %%%%%%%
-
-\newcommand{\vloz}{\input}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%% REJSTRIK %%%%%%%%
-
-\makeatletter
-\renewenvironment{theindex}
-               {\if@twocolumn
-                  \@restonecolfalse
-                \else
-                  \@restonecoltrue
-                \fi
-                \twocolumn[\phantomsection\addcontentsline{toc}{chapter}{\indexname}\@makeschapterhead{\indexname}]%
-                \@mkboth{\MakeUppercase\indexname}%
-                        {\MakeUppercase\indexname}%
-                \thispagestyle{plain}\parindent\z@
-                \parskip\z@ \@plus .3\p@\relax
-                \columnseprule \z@
-                \columnsep 35\p@
-                \let\item\@idxitem}
-               {\if@restonecol\onecolumn\else\clearpage\fi}
-\makeatother
-
-\newcommand{\VytvorRejstrik}{
-\printindex
-}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%  INFORMACE PRO PDF %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% INFO FOR PDF  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \AtEndPreamble{
 \hypersetup{
 pdfencoding=unicode,
 pdftitle={\TitleOfThesis.},
-pdfauthor={\Author{} (\Dnes)},
+pdfauthor={\Author{} (\number\day.~\month\space\number\year)},
 %pdfsubject={Unil, faculty of biology and medicine, School of biology, Lausanne \Year},
 pdfkeywords={\Keywords},
 linktoc=all,
 breaklinks=true,
 colorlinks=true,
 pdfencoding=auto,
-%% pro dalsi mozna nastaveni viz http://www.tug.org/applications/hyperref/manual.html
+%% for more settings look at http://www.tug.org/applications/hyperref/manual.html
 }}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% VYLEPSENY VZHLED OBSAHU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TABLE OF CONTENT FORMATING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{tocloft}
@@ -320,5 +221,3 @@ pdfencoding=auto,
 \setlength{\cftbeforesubsecskip}{0.5mm}       %%% vertikalni mezera nad polozkou odstavce
 \setlength{\cftsubsecnumwidth}{10mm}          %%% mezera za cislem odstavce - v pripade potreby zmente
 \renewcommand{\cftsubsecdotsep}{3}            %%% hustota vyplne mezi nazvem odstavce a cislem stranky
-
-\newcommand{\VytvorObsah}{\tableofcontents}

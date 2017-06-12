@@ -23,6 +23,9 @@
 % you can set a path for including graphics
 % \graphicspath{{/path/to/figures}}
 
+% more info about bibliography sytes you can find here https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
+\bibliographystyle{apalike}
+
 % {University} {Faculty} {Department}
 \setAffiliation{University of Lausanne}{Faculty of Biology and Medicine}{Department of Ecology and Evolution}
 
@@ -45,7 +48,8 @@
 \Frontpage{mid-PhD report}
 
 \pdfbookmark{Contents}{Contents}
-\VytvorObsah
+\tableofcontents
+
 \cleardoublepage
 
 \setcounter{page}{1}
@@ -54,27 +58,22 @@
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection. #1}{}}
 
-\HlavickaKapitoly
+\ChapterHeader
 
 \chapter{Introduction} \label{intro}
-
-This is important work~\cite{jaron2013}.
+\input{1-introduction}
 
 \chapter{Materials and Methods} \label{methods}
-
-With reliable data~\cite{uniprot_yeast2013}.
+\input{2-methods}
 
 \chapter{Results} \label{results}
-
-We have awesome results.
+\input{3-results}
 
 \chapter{Discussion} \label{discussion}
+\input{4-discussion}
 
-ANd it makes sense in context of current literature~\cite{uchiyama2006}.
-
-\chapter{Conclusion} \label{conclusion}
-
-You should worship out work!
+% \chapter{Conclusion} \label{conclusion}
+% You should worship out work!
 
 % \newpage
 \clearpage
@@ -84,22 +83,9 @@ You should worship out work!
 
 \renewcommand{\bibname}{References}
 % \pdfbookmark{\bibname}{\bibname}
-\bibliographystyle{unsrt}
-\HlavickaLiteratura
+\ReferenceHeader
 \bibliography{library}
 \clearpage
-
-% \phantomsection
-% \addcontentsline{toc}{chapter}{List of figures and tables}
-% \chapter*{List of figures and tables}
-% \centering
-% \listoffigures
-%
-% % \vfill
-%
-% \listoftables
-
-% \clearpage
 
 
 \end{document}

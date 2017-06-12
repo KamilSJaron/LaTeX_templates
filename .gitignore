@@ -10,3 +10,11 @@
 *.lof
 *.lot
 *.idx
+.gitignore
+Makefile
+*.dvi
+*.fdb_latexmk
+*.fls
+*.ilg
+*.ind
+docx
